@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BINANCE NQ9 — Slots are full. All 2,500 application slots have been filled and application registration is currently closed." />
+  <title>BINANCE NQ9 — Slots Are Full</title>
+  <style>
+    /* =========================================================
+       DESIGN TOKENS — LUXURY WHITE & SIGNATURE YELLOW THEME
+    ========================================================= */
+    :root {
+      --bg-pure: #FFFFFF;
+      --bg-surface: #FAFAFB;
+      --bg-yellow-tint: #FFFDF2;
+      --bg-yellow-soft: #FFF8D6;
+
+      --accent-yellow: #FCD535;
+      --accent-yellow-deep: #E5B800;
+      --accent-yellow-glow: rgba(252, 213, 53, 0.28);
+
+      --text-primary: #0B0E11;
+      --text-secondary: #474D57;
+      --text-muted: #707A8A;
+
+      --border-hairline: #EAECEF;
+      --border-yellow: rgba(252, 213, 53, 0.65);
+
+      --shadow-sm: 0 2px 10px rgba(11, 14, 17, 0.03);
+      --shadow-card: 0 18px 50px rgba(11, 14, 17, 0.055), 0 2px 8px rgba(11, 14, 17, 0.025);
+      --shadow-yellow: 0 20px 55px rgba(252, 213, 53, 0.16), 0 8px 24px rgba(11, 14, 17, 0.04);
+
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-pill: 999px;
+
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* =========================================================
+       RESET & BASE STYLES
+    ========================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--bg-pure);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Subtle architectural light grid & warm ambient aura on pure white */
+    .ambient-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        radial-gradient(circle at 50% 18%, rgba(252, 213, 53, 0.14) 0%, rgba(255, 255, 255, 0) 52%),
+        linear-gradient(to right, rgba(234, 236, 239, 0.45) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(234, 236, 239, 0.45) 1px, transparent 1px);
+      background-size: 100% 100%, 64px 64px, 64px 64px;
+      mask-image: radial-gradient(ellipse 85% 75% at 50% 30%, #000 35%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 30%, #000 35%, transparent 100%);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-hairline);
+      transition: box-shadow 0.35s var(--transition-smooth);
+    }
+
+    .site-header.is-scrolled {
+      box-shadow: 0 8px 30px rgba(11, 14, 17, 0.04);
+    }
+
+    .header-inner {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--text-primary);
+      user-select: none;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: var(--bg-pure);
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.35s var(--transition-smooth), border-color 0.35s var(--transition-smooth);
+    }
+
+    .brand-lockup:hover .brand-mark {
+      transform: translateY(-1px);
+      border-color: var(--accent-yellow);
+    }
+
+    .brand-text-group {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-name {
+      font-size: 1.125rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+    }
+
+    .brand-sub {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .header-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-yellow-tint);
+      border: 1px solid var(--border-yellow);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-yellow-deep);
+      box-shadow: 0 0 0 4px rgba(252, 213, 53, 0.35);
+      animation: subtlePulse 2.4s infinite ease-in-out;
+    }
+
+    @keyframes subtlePulse {
+      0%, 100% {
+        box-shadow: 0 0 0 3px rgba(252, 213, 53, 0.3);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 0 7px rgba(252, 213, 53, 0.15);
+        transform: scale(1.08);
+      }
+    }
+
+    /* =========================================================
+       MAIN HERO & STATUS SHOWCASE
+    ========================================================= */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 72px 0 88px;
+    }
+
+    .hero-section {
+      text-align: center;
+      max-width: 840px;
+      margin: 0 auto;
+    }
+
+    /* Prominent Brand Crest */
+    .hero-brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-pure);
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: revealUp 0.7s var(--transition-smooth) 0.05s forwards;
+    }
+
+    .hero-brand-badge .accent-bar {
+      width: 14px;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--accent-yellow);
+    }
+
+    .hero-brand-badge span {
+      font-size: 0.875rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+    }
+
+    /* Main Visual Highlight: SLOTS ARE FULL */
+    .hero-title {
+      font-size: clamp(2.85rem, 7.5vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.02;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealUp 0.8s var(--transition-smooth) 0.14s forwards;
+    }
+
+    .hero-title-highlight {
+      position: relative;
+      display: inline-block;
+      padding: 0 6px;
+      z-index: 1;
+    }
+
+    .hero-title-highlight::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 8%;
+      height: 22%;
+      background: var(--accent-yellow);
+      border-radius: 4px;
+      z-index: -1;
+      transform: scaleX(0);
+      transform-origin: left center;
+      animation: highlightSweep 0.75s var(--transition-smooth) 0.55s forwards;
+    }
+
+    @keyframes highlightSweep {
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: revealUp 0.8s var(--transition-smooth) 0.24s forwards;
+    }
+
+    /* =========================================================
+       PREMIUM YELLOW-ACCENTED APPLICATION STATUS SECTION
+    ========================================================= */
+    .status-showcase {
+      position: relative;
+      background: var(--bg-pure);
+      border: 1.5px solid var(--border-yellow);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-yellow);
+      overflow: hidden;
+      text-align: left;
+      transition: transform 0.45s var(--transition-smooth), box-shadow 0.45s var(--transition-smooth);
+      opacity: 0;
+      transform: translateY(22px);
+      animation: revealUp 0.85s var(--transition-smooth) 0.34s forwards;
+    }
+
+    .status-showcase:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 26px 65px rgba(252, 213, 53, 0.22), 0 10px 28px rgba(11, 14, 17, 0.05);
+    }
+
+    /* Interactive subtle white-gold sheen controlled by JS */
+    .status-showcase::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        520px circle at var(--mouse-x, 50%) var(--mouse-y, 0%),
+        rgba(252, 213, 53, 0.14),
+        transparent 60%
+      );
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .status-showcase:hover::before {
+      opacity: 1;
+    }
+
+    /* Signature yellow top banner inside status card */
+    .status-banner {
+      background: linear-gradient(90deg, var(--accent-yellow) 0%, #FFE266 55%, var(--accent-yellow) 100%);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(11, 14, 17, 0.06);
+    }
+
+    .status-banner-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8125rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .status-banner-chip {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+    }
+
+    .status-body {
+      padding: 40px 36px;
+      background: linear-gradient(180deg, var(--bg-yellow-tint) 0%, var(--bg-pure) 48%);
+      position: relative;
+      z-index: 1;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .status-primary-message {
+      font-size: clamp(1.375rem, 2.6vw, 1.875rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.28;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .status-secondary-message {
+      font-size: 1.0625rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .status-capacity-badge {
+      padding: 18px 24px;
+      border-radius: var(--radius-md);
+      background: var(--bg-pure);
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-sm);
+      text-align: right;
+      min-width: 176px;
+    }
+
+    .capacity-eyebrow {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .capacity-value {
+      font-size: 1.625rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      line-height: 1.15;
+    }
+
+    .capacity-sub {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-yellow-deep);
+      margin-top: 4px;
+    }
+
+    /* Visual Allocation Bar (2,500 / 2,500 Filled) */
+    .allocation-meter {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-hairline);
+    }
+
+    .meter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .meter-track {
+      width: 100%;
+      height: 10px;
+      border-radius: var(--radius-pill);
+      background: #F2F3F5;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .meter-fill {
+      height: 100%;
+      width: 100%;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(90deg, var(--accent-yellow-deep), var(--accent-yellow), #FFE46B);
+      transform: scaleX(0);
+      transform-origin: left center;
+      animation: fillProgress 1.1s var(--transition-smooth) 0.55s forwards;
+    }
+
+    @keyframes fillProgress {
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    /* =========================================================
+       CLEAN THREE-CARD SUMMARY ROW
+    ========================================================= */
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 840px;
+      margin: 28px auto 0;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealUp 0.85s var(--transition-smooth) 0.48s forwards;
+    }
+
+    .info-card {
+      background: var(--bg-pure);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: left;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.35s var(--transition-smooth), border-color 0.35s var(--transition-smooth), box-shadow 0.35s var(--transition-smooth);
+    }
+
+    .info-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-yellow);
+      box-shadow: var(--shadow-card);
+    }
+
+    .info-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--bg-yellow-soft);
+      border: 1px solid rgba(252, 213, 53, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .info-card-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .info-card-value {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .info-card-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+    .site-footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-hairline);
+      padding: 32px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-brand-name {
+      font-size: 0.9375rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+    }
+
+    .footer-divider {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent-yellow-deep);
+    }
+
+    .footer-status {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .footer-disclaimer {
+      font-size: 0.78125rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.55;
+      text-align: right;
+    }
+
+    /* =========================================================
+       ANIMATIONS & RESPONSIVE BREAKPOINTS
+    ========================================================= */
+    @keyframes revealUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 820px) {
+      main {
+        padding: 52px 0 64px;
+      }
+
+      .status-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .status-capacity-badge {
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .info-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-disclaimer {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .header-inner {
+        height: 68px;
+      }
+
+      .brand-name {
+        font-size: 1rem;
+      }
+
+      .brand-sub {
+        display: none;
+      }
+
+      .header-status-pill {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+      }
+
+      .status-banner {
+        padding: 14px 20px;
+      }
+
+      .status-body {
+        padding: 28px 20px;
+      }
+
+      .hero-subtitle {
+        letter-spacing: 0.14em;
+        margin-bottom: 36px;
+      }
+
+      .status-capacity-badge {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-canvas" aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <div class="brand-lockup" aria-label="BINANCE NQ9">
+        <div class="brand-mark" aria-hidden="true">
+          <!-- Original NQ9 Architectural Monogram SVG -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="#FCD535" stroke-width="2.2"/>
+            <path d="M7.5 15.5V8.5L12.5 15.5V8.5" stroke="#0B0E11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16.25" cy="10.25" r="1.75" stroke="#0B0E11" stroke-width="1.8"/>
+            <path d="M18 10.25V14.25C18 15.08 17.33 15.75 16.5 15.75H15.25" stroke="#0B0E11" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="brand-text-group">
+          <span class="brand-name">BINANCE NQ9</span>
+          <span class="brand-sub">Allocation Notice</span>
+        </div>
+      </div>
+
+      <div class="header-status-pill" role="status" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>Applications Unavailable</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="container">
+      <section class="hero-section" aria-labelledby="main-status-heading">
+        <!-- Prominent Brand Crest -->
+        <div class="hero-brand-badge">
+          <span class="accent-bar" aria-hidden="true"></span>
+          <span>BINANCE NQ9</span>
+          <span class="accent-bar" aria-hidden="true"></span>
+        </div>
+
+        <!-- Main Visual Highlight -->
+        <h1 class="hero-title" id="main-status-heading">
+          <span class="hero-title-highlight">SLOTS ARE FULL</span>
+        </h1>
+
+        <p class="hero-subtitle">APPLICATIONS NOT AVAILABLE</p>
+
+        <!-- Premium Yellow-Accented Application Status Section -->
+        <div class="status-showcase" id="statusCard" role="region" aria-label="Application Status Details">
+          <div class="status-banner">
+            <div class="status-banner-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="4" y="10" width="16" height="11" rx="2.5" stroke="#0B0E11" stroke-width="2.2"/>
+                <path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="#0B0E11" stroke-width="2.2" stroke-linecap="round"/>
+              </svg>
+              <span>Application Status</span>
+            </div>
+            <span class="status-banner-chip">Registration Closed</span>
+          </div>
+
+          <div class="status-body">
+            <div class="status-grid">
+              <div>
+                <p class="status-primary-message">All 2,500 application slots have been filled.</p>
+                <p class="status-secondary-message">Application registration is currently closed.</p>
+              </div>
+
+              <div class="status-capacity-badge">
+                <div>
+                  <div class="capacity-eyebrow">Slot Allocation</div>
+                  <div class="capacity-value">2,500 / 2,500</div>
+                </div>
+                <div class="capacity-sub">100% Filled</div>
+              </div>
+            </div>
+
+            <div class="allocation-meter" aria-label="All 2,500 slots filled">
+              <div class="meter-header">
+                <span>Cohort Capacity Reached</span>
+                <span>Closed</span>
+              </div>
+              <div class="meter-track">
+                <div class="meter-fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Minimalist Informational Status Cards -->
+      <section class="info-cards" aria-label="Status Overview">
+        <article class="info-card">
+          <div class="info-card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M9 12l2 2 4-4" stroke="#0B0E11" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="12" r="9" stroke="#0B0E11" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="info-card-label">Slot Capacity</div>
+          <div class="info-card-value">2,500 Slots Filled</div>
+          <p class="info-card-desc">Maximum authorized allocation for BINANCE NQ9 has been completely assigned.</p>
+        </article>
+
+        <article class="info-card">
+          <div class="info-card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="#0B0E11" stroke-width="2"/>
+              <path d="M8 12h8" stroke="#0B0E11" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="info-card-label">Registration Window</div>
+          <div class="info-card-value">Currently Closed</div>
+          <p class="info-card-desc">Applications are not available at this time and new entries are disabled.</p>
+        </article>
+
+        <article class="info-card">
+          <div class="info-card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke="#0B0E11" stroke-width="2"/>
+              <path d="M12 8v5" stroke="#0B0E11" stroke-width="2.2" stroke-linecap="round"/>
+              <circle cx="12" cy="16.2" r="1.1" fill="#0B0E11"/>
+            </svg>
+          </div>
+          <div class="info-card-label">Platform Notice</div>
+          <div class="info-card-value">BINANCE NQ9</div>
+          <p class="info-card-desc">No active intake or waitlist registration is open under this allocation cycle.</p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="#FCD535" stroke-width="2.2"/>
+          <path d="M7.5 15.5V8.5L12.5 15.5V8.5" stroke="#0B0E11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="16.25" cy="10.25" r="1.75" stroke="#0B0E11" stroke-width="1.8"/>
+        </svg>
+        <span class="footer-brand-name">BINANCE NQ9</span>
+        <span class="footer-divider" aria-hidden="true"></span>
+        <span class="footer-status">Slots Are Full</span>
+      </div>
+
+      <p class="footer-disclaimer">
+        &copy; <span id="currentYear">2026</span> BINANCE NQ9. Original NQ9 visual identity; independent notice page with no implied official Binance ownership or endorsement.
+      </p>
+    </div>
+  </footer>
+
+  <!-- REFINED VANILLA JAVASCRIPT -->
+  <script>
+    (function () {
+      "use strict";
+
+      // 1. Sticky Header Elevation on Scroll
+      const header = document.getElementById("siteHeader");
+      const updateHeaderShadow = () => {
+        if (!header) return;
+        header.classList.toggle("is-scrolled", window.scrollY > 12);
+      };
+      window.addEventListener("scroll", updateHeaderShadow, { passive: true });
+      updateHeaderShadow();
+
+      // 2. Subtle Interactive Specular Sheen on the Yellow Status Card
+      const statusCard = document.getElementById("statusCard");
+      if (statusCard && window.matchMedia("(pointer: fine)").matches) {
+        statusCard.addEventListener("mousemove", (event) => {
+          const rect = statusCard.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width) * 100;
+          const y = ((event.clientY - rect.top) / rect.height) * 100;
+          statusCard.style.setProperty("--mouse-x", `${x.toFixed(2)}%`);
+          statusCard.style.setProperty("--mouse-y", `${y.toFixed(2)}%`);
+        });
+      }
+
+      // 3. Automatic Copyright Year
+      const yearEl = document.getElementById("currentYear");
+      if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
+</body>
+</html>
