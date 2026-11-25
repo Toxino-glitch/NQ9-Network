@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NQ9 Project — Expression of Interest</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text-primary: #000000;
+      --text-secondary: #525257;
+      --text-muted: #86868b;
+      --border-light: #e5e5e7;
+      --border-hover: #a1a1a6;
+      --surface-subtle: #fafafa;
+      --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Minimal Top Navigation for Sub-Views */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+      z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: opacity 0.4s var(--ease-apple), transform 0.4s var(--ease-apple);
+    }
+
+    .top-bar.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .top-bar-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--text-primary);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .back-btn {
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: transparent;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-pill);
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+    }
+
+    .back-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--text-primary);
+    }
+
+    /* Main App Container */
+    .app-shell {
+      flex: 1;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* View Transitions */
+    .view {
+      display: none;
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    .view.is-active {
+      display: block;
+      animation: viewEnter 0.65s var(--ease-apple) forwards;
+    }
+
+    @keyframes viewEnter {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 1. Opening Screen & Homepage Counter */
+    .opening-hero {
+      text-align: center;
+      padding: 36px 0 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .nq9-logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 36px;
+    }
+
+    .nq9-mark {
+      width: 76px;
+      height: 76px;
+      opacity: 0;
+      transform: scale(0.92);
+      animation: logoReveal 0.9s var(--ease-apple) 0.1s forwards;
+    }
+
+    .nq9-mark circle,
+    .nq9-mark path {
+      stroke-dasharray: 260;
+      stroke-dashoffset: 260;
+      animation: strokeDraw 1.2s var(--ease-apple) 0.15s forwards;
+    }
+
+    .nq9-wordmark {
+      font-size: clamp(2.1rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      padding-left: 0.28em;
+      color: var(--text-primary);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeUpSoft 0.85s var(--ease-apple) 0.25s forwards;
+    }
+
+    .nq9-subtitle {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      opacity: 0;
+      animation: fadeUpSoft 0.85s var(--ease-apple) 0.38s forwards;
+    }
+
+    .enter-wrap {
+      opacity: 0;
+      animation: fadeUpSoft 0.85s var(--ease-apple) 0.5s forwards;
+    }
+
+    /* Primary & Secondary Luxury Buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 196px;
+      height: 52px;
+      padding: 0 36px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background-color: #000000;
+      border: 1px solid #000000;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: transform 0.28s var(--ease-apple), background-color 0.28s ease, box-shadow 0.28s ease, opacity 0.25s ease;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background-color: #1d1d1f;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-primary:active:not(:disabled) {
+      transform: translateY(0) scale(0.985);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    /* Public Interested People Counter Section */
+    .counter-section {
+      margin-top: 12px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border-light);
+      text-align: center;
+      opacity: 0;
+      animation: fadeUpSoft 0.9s var(--ease-apple) 0.65s forwards;
+    }
+
+    .counter-heading {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .counter-display-wrap {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .counter-number {
+      font-size: clamp(3.25rem, 10vw, 5.25rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      display: inline-block;
+      transition: opacity 0.22s ease, transform 0.32s var(--ease-apple);
+    }
+
+    .counter-number.is-updating {
+      opacity: 0.35;
+      transform: translateY(-6px);
+    }
+
+    .counter-sim-label {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    .tier-stats-grid {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .tier-stat-card {
+      background: var(--bg);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 18px 14px;
+      text-align: center;
+      transition: border-color 0.25s ease;
+    }
+
+    .tier-stat-card:hover {
+      border-color: var(--border-hover);
+    }
+
+    .tier-stat-count {
+      font-size: 24px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .tier-stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* 2. Interest Selection Screen */
+    .card-panel {
+      max-width: 560px;
+      width: 100%;
+      margin: 56px auto 24px;
+      padding: 40px 36px;
+      background: var(--bg);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+    }
+
+    .step-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(1.35rem, 3.2vw, 1.75rem);
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .section-note {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+
+    .amount-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .amount-option {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 22px;
+      background: var(--bg);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.2s var(--ease-apple);
+      user-select: none;
+    }
+
+    .amount-option:hover {
+      border-color: var(--border-hover);
+    }
+
+    .amount-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .amount-value {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    .amount-radio-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid #c7c7cc;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .amount-radio-dot::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffffff;
+      transform: scale(0);
+      transition: transform 0.22s var(--ease-apple);
+    }
+
+    .amount-option.is-selected {
+      border-color: #000000;
+      box-shadow: inset 0 0 0 1px #000000;
+      background-color: var(--surface-subtle);
+    }
+
+    .amount-option.is-selected .amount-radio-dot {
+      border-color: #000000;
+      background-color: #000000;
+    }
+
+    .amount-option.is-selected .amount-radio-dot::after {
+      transform: scale(1);
+    }
+
+    .continue-container {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: max-height 0.45s var(--ease-apple), opacity 0.35s ease, transform 0.35s var(--ease-apple);
+    }
+
+    .continue-container.is-visible {
+      max-height: 100px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 3. Registration Form */
+    .selected-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-light);
+      background: var(--surface-subtle);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .form-control {
+      width: 100%;
+      height: 48px;
+      padding: 0 16px;
+      font-family: inherit;
+      font-size: 16px; /* Prevents iOS Safari zoom */
+      color: var(--text-primary);
+      background-color: var(--bg);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .form-control::placeholder {
+      color: #a1a1a6;
+    }
+
+    .form-control:focus {
+      border-color: #000000;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+    }
+
+    select.form-control {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 42px;
+      cursor: pointer;
+    }
+
+    .form-error {
+      font-size: 13px;
+      color: #b91c1c;
+      margin-top: 10px;
+      margin-bottom: 14px;
+      min-height: 18px;
+    }
+
+    /* 4. Thank You Screen */
+    .thankyou-card {
+      text-align: center;
+      padding: 52px 36px;
+    }
+
+    .success-icon {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 24px;
+    }
+
+    .success-circle {
+      stroke: #000000;
+      stroke-width: 2;
+      fill: none;
+      stroke-dasharray: 180;
+      stroke-dashoffset: 180;
+    }
+
+    .success-check {
+      stroke: #000000;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+    }
+
+    .view.is-active .success-circle {
+      animation: strokeDraw 0.7s var(--ease-apple) 0.1s forwards;
+    }
+
+    .view.is-active .success-check {
+      animation: strokeDraw 0.45s var(--ease-apple) 0.55s forwards;
+    }
+
+    .thankyou-title {
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+
+    .thankyou-lead {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .thankyou-sub {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-width: 420px;
+      margin: 0 auto 32px;
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 46px;
+      padding: 0 28px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      background: var(--bg);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: border-color 0.25s ease, background-color 0.25s ease;
+    }
+
+    .btn-outline:hover {
+      border-color: #000000;
+    }
+
+    /* Keyframes */
+    @keyframes logoReveal {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes strokeDraw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes fadeUpSoft {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 640px) {
+      .app-shell {
+        padding: 28px 18px;
+      }
+
+      .opening-hero {
+        padding: 20px 0 32px;
+      }
+
+      .tier-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .tier-stat-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        text-align: left;
+      }
+
+      .tier-stat-count {
+        order: 2;
+        margin-bottom: 0;
+        font-size: 20px;
+      }
+
+      .tier-stat-label {
+        order: 1;
+        font-size: 13px;
+      }
+
+      .card-panel {
+        margin-top: 64px;
+        padding: 28px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Minimal Sub-View Top Bar -->
+  <header id="topBar" class="top-bar" aria-hidden="true">
+    <button type="button" id="brandHomeBtn" class="top-bar-brand" aria-label="Return to NQ9 Homepage">
+      <svg width="22" height="22" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <circle cx="32" cy="32" r="28" stroke="#000000" stroke-width="3.5" />
+        <path d="M22 42V22L42 42V22" stroke="#000000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <span>NQ9</span>
+    </button>
+    <button type="button" id="backBtn" class="back-btn">Back</button>
+  </header>
+
+  <main class="app-shell">
+
+    <!-- 1. OPENING SCREEN (HOMEPAGE) & PUBLIC COUNTER -->
+    <section id="viewOpening" class="view is-active" aria-label="NQ9 Project Opening Screen">
+      <div class="opening-hero">
+        <div class="nq9-logo-wrap">
+          <svg class="nq9-mark" viewBox="0 0 80 80" fill="none" aria-label="NQ9 Logo">
+            <circle cx="40" cy="40" r="36" stroke="#000000" stroke-width="2.2" />
+            <path d="M26 52V28L54 52V28" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <h1 class="nq9-wordmark">NQ9</h1>
+          <p class="nq9-subtitle">NQ9 Project</p>
+        </div>
+
+        <div class="enter-wrap">
+          <button type="button" id="enterBtn" class="btn-primary">ENTER</button>
+        </div>
+      </div>
+
+      <!-- Public Interested People Counter -->
+      <div class="counter-section" aria-label="Public Interested People Counter">
+        <h2 class="counter-heading">TOTAL INTERESTED PEOPLE</h2>
+        <div class="counter-display-wrap">
+          <span id="totalCounter" class="counter-number">1</span>
+        </div>
+        <p class="counter-sim-label">Simulated demonstration counter &mdash; not verified registrations</p>
+
+        <div class="tier-stats-grid" aria-label="Real Registration Tier Statistics">
+          <div class="tier-stat-card">
+            <div id="stat1000" class="tier-stat-count">0</div>
+            <div class="tier-stat-label">$1,000 &ndash; Interested People</div>
+          </div>
+          <div class="tier-stat-card">
+            <div id="stat2000" class="tier-stat-count">0</div>
+            <div class="tier-stat-label">$2,000 &ndash; Interested People</div>
+          </div>
+          <div class="tier-stat-card">
+            <div id="stat5000" class="tier-stat-count">0</div>
+            <div class="tier-stat-label">$5,000 &ndash; Interested People</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. INTEREST AMOUNT SELECTION -->
+    <section id="viewInterest" class="view" aria-label="Interest Selection">
+      <div class="card-panel">
+        <p class="step-eyebrow">Step 01 &mdash; Expression of Interest</p>
+        <h2 class="section-title">HOW MUCH ARE YOU INTERESTED IN INVESTING IN THE NQ9 PROJECT?</h2>
+        <p class="section-note">This is strictly an expression of interest. No payment, deposit, or transfer is requested.</p>
+
+        <div class="amount-options" role="radiogroup" aria-label="Select Interest Amount">
+          <label class="amount-option" data-amount="1000">
+            <input type="radio" name="interestAmount" value="1000" />
+            <span class="amount-value">$1,000</span>
+            <span class="amount-radio-dot" aria-hidden="true"></span>
+          </label>
+
+          <label class="amount-option" data-amount="2000">
+            <input type="radio" name="interestAmount" value="2000" />
+            <span class="amount-value">$2,000</span>
+            <span class="amount-radio-dot" aria-hidden="true"></span>
+          </label>
+
+          <label class="amount-option" data-amount="5000">
+            <input type="radio" name="interestAmount" value="5000" />
+            <span class="amount-value">$5,000</span>
+            <span class="amount-radio-dot" aria-hidden="true"></span>
+          </label>
+        </div>
+
+        <div id="continueContainer" class="continue-container">
+          <button type="button" id="continueBtn" class="btn-primary btn-full">CONTINUE</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. REGISTRATION FORM -->
+    <section id="viewRegister" class="view" aria-label="Registration Form">
+      <div class="card-panel">
+        <p class="step-eyebrow">Step 02 &mdash; Registration</p>
+        <h2 class="section-title">Register Your Interest</h2>
+        <div id="selectedAmountBadge" class="selected-pill">Selected Interest: &mdash;</div>
+
+        <form id="registrationForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="fullName">Full Name</label>
+            <input
+              id="fullName"
+              name="fullName"
+              type="text"
+              class="form-control"
+              placeholder="Enter your full name"
+              autocomplete="name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="gmail">Gmail</label>
+            <input
+              id="gmail"
+              name="gmail"
+              type="email"
+              class="form-control"
+              placeholder="yourname@gmail.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="mobileNumber">Mobile Number</label>
+            <input
+              id="mobileNumber"
+              name="mobileNumber"
+              type="tel"
+              class="form-control"
+              placeholder="+1 555 010 9999"
+              autocomplete="tel"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="country">Country</label>
+            <select id="country" name="country" class="form-control" autocomplete="country-name" required>
+              <option value="" disabled selected>Select your country</option>
+            </select>
+          </div>
+
+          <div id="formError" class="form-error" role="alert" aria-live="polite"></div>
+
+          <button type="submit" id="submitBtn" class="btn-primary btn-full">SUBMIT</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 4. THANK YOU SCREEN -->
+    <section id="viewThankYou" class="view" aria-label="Thank You">
+      <div class="card-panel thankyou-card">
+        <svg class="success-icon" viewBox="0 0 64 64" aria-hidden="true">
+          <circle class="success-circle" cx="32" cy="32" r="28" />
+          <path class="success-check" d="M20 33.5L28 41.5L44.5 24" />
+        </svg>
+
+        <h2 class="thankyou-title">THANK YOU!</h2>
+        <p class="thankyou-lead">"Thank you for your interest in the NQ9 Project."</p>
+        <p class="thankyou-sub">"Your registration has been successfully submitted. Please check your Gmail for future updates."</p>
+
+        <button type="button" id="returnHomeBtn" class="btn-outline">Return to Home</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* =====================================================================
+       * DATABASE CONFIGURATION (Supabase REST + Safe Aggregate RPC)
+       * Leave blank to run in local browser mode (counts start strictly at 0).
+       * Add your Supabase URL & Anon Key to enable global real-time persistence.
+       * ===================================================================== */
+      const NQ9_CONFIG = {
+        supabaseUrl: "",     // e.g. "https://your-project-id.supabase.co"
+        supabaseAnonKey: ""  // e.g. "eyJhbGciOi..."
+      };
+
+      const isDatabaseConfigured = Boolean(
+        NQ9_CONFIG.supabaseUrl && NQ9_CONFIG.supabaseAnonKey
+      );
+
+      /* =====================================================================
+       * 1. PERSISTENT SIMULATED COUNTER (1 -> 1,645 in 2 hours)
+       * ===================================================================== */
+      const COUNTER_START = 1;
+      const COUNTER_MAX = 1645;
+      const COUNTER_DURATION_MS = 2 * 60 * 60 * 1000; // 7,200,000 ms (2 hours)
+      const STORAGE_START_KEY = "nq9_counter_start_ts_v1";
+
+      function getOrCreateStartTimestamp() {
+        try {
+          const raw = localStorage.getItem(STORAGE_START_KEY);
+          const parsed = raw ? Number(raw) : NaN;
+          if (Number.isFinite(parsed) && parsed > 0 && parsed <= Date.now()) {
+            return parsed;
+          }
+          const now = Date.now();
+          localStorage.setItem(STORAGE_START_KEY, String(now));
+          return now;
+        } catch (err) {
+          return Date.now();
+        }
+      }
+
+      const counterStartTs = getOrCreateStartTimestamp();
+      const totalCounterEl = document.getElementById("totalCounter");
+      let displayedCount = 0;
+      let counterTimerId = null;
+
+      function computeTargetCount() {
+        const elapsed = Math.max(0, Date.now() - counterStartTs);
+        if (elapsed >= COUNTER_DURATION_MS) {
+          return COUNTER_MAX;
+        }
+        const progress = elapsed / COUNTER_DURATION_MS;
+        const increments = Math.floor(progress * (COUNTER_MAX - COUNTER_START));
+        return Math.min(COUNTER_MAX, COUNTER_START + increments);
+      }
+
+      function renderTotalCounter(nextCount, animate) {
+        if (nextCount === displayedCount) return;
+
+        if (!animate) {
+          displayedCount = nextCount;
+          totalCounterEl.textContent = displayedCount.toLocaleString("en-US");
+          return;
+        }
+
+        totalCounterEl.classList.add("is-updating");
+        setTimeout(function () {
+          displayedCount = nextCount;
+          totalCounterEl.textContent = displayedCount.toLocaleString("en-US");
+          totalCounterEl.classList.remove("is-updating");
+        }, 180);
+      }
+
+      function startSimulatedCounter() {
+        const initial = computeTargetCount();
+        renderTotalCounter(initial, false);
+
+        if (initial >= COUNTER_MAX) return;
+
+        counterTimerId = setInterval(function () {
+          const next = computeTargetCount();
+          if (next !== displayedCount) {
+            renderTotalCounter(next, true);
+          }
+          if (next >= COUNTER_MAX && counterTimerId) {
+            clearInterval(counterTimerId);
+            counterTimerId = null;
+          }
+        }, 250);
+      }
+
+      document.addEventListener("visibilitychange", function () {
+        if (!document.hidden) {
+          renderTotalCounter(computeTargetCount(), false);
+        }
+      });
+
+      /* =====================================================================
+       * 2. REAL REGISTRATION TIER STATISTICS (Privacy-Protected)
+       * ===================================================================== */
+      const LOCAL_STATS_KEY = "nq9_real_tier_counts_v1";
+      const stat1000El = document.getElementById("stat1000");
+      const stat2000El = document.getElementById("stat2000");
+      const stat5000El = document.getElementById("stat5000");
+
+      function readLocalStats() {
+        try {
+          const raw = localStorage.getItem(LOCAL_STATS_KEY);
+          if (!raw) return { 1000: 0, 2000: 0, 5000: 0 };
+          const parsed = JSON.parse(raw);
+          return {
+            1000: Number(parsed["1000"]) || 0,
+            2000: Number(parsed["2000"]) || 0,
+            5000: Number(parsed["5000"]) || 0
+          };
+        } catch (err) {
+          return { 1000: 0, 2000: 0, 5000: 0 };
+        }
+      }
+
+      function writeLocalStats(stats) {
+        try {
+          localStorage.setItem(LOCAL_STATS_KEY, JSON.stringify(stats));
+        } catch (err) {
+          // Ignore storage quota errors
+        }
+      }
+
+      function updateTierStatsUI(stats) {
+        stat1000El.textContent = (Number(stats[1000]) || 0).toLocaleString("en-US");
+        stat2000El.textContent = (Number(stats[2000]) || 0).toLocaleString("en-US");
+        stat5000El.textContent = (Number(stats[5000]) || 0).toLocaleString("en-US");
+      }
+
+      async function fetchPublicTierStats() {
+        if (!isDatabaseConfigured) {
+          updateTierStatsUI(readLocalStats());
+          return;
+        }
+
+        try {
+          const baseUrl = NQ9_CONFIG.supabaseUrl.replace(/\/+$/, "");
+          const response = await fetch(baseUrl + "/rest/v1/rpc/get_nq9_tier_counts", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": NQ9_CONFIG.supabaseAnonKey,
+              "Authorization": "Bearer " + NQ9_CONFIG.supabaseAnonKey
+            },
+            body: "{}"
+          });
+
+          if (!response.ok) throw new Error("Stats fetch failed");
+          const data = await response.json();
+          updateTierStatsUI({
+            1000: data.tier_1000 || 0,
+            2000: data.tier_2000 || 0,
+            5000: data.tier_5000 || 0
+          });
+        } catch (err) {
+          updateTierStatsUI(readLocalStats());
+        }
+      }
+
+      async function saveRegistration(payload) {
+        if (!isDatabaseConfigured) {
+          // Local demonstration mode: update genuine submitted tier count without storing plain PII
+          const current = readLocalStats();
+          current[payload.interest_amount] = (current[payload.interest_amount] || 0) + 1;
+          writeLocalStats(current);
+          updateTierStatsUI(current);
+          return;
+        }
+
+        const baseUrl = NQ9_CONFIG.supabaseUrl.replace(/\/+$/, "");
+        const response = await fetch(baseUrl + "/rest/v1/nq9_registrations", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": NQ9_CONFIG.supabaseAnonKey,
+            "Authorization": "Bearer " + NQ9_CONFIG.supabaseAnonKey,
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error("Registration request failed");
+        }
+
+        await fetchPublicTierStats();
+      }
+
+      /* =====================================================================
+       * 3. VIEW NAVIGATION & FLOW STATE
+       * ===================================================================== */
+      const views = {
+        opening: document.getElementById("viewOpening"),
+        interest: document.getElementById("viewInterest"),
+        register: document.getElementById("viewRegister"),
+        thankyou: document.getElementById("viewThankYou")
+      };
+
+      const topBar = document.getElementById("topBar");
+      const backBtn = document.getElementById("backBtn");
+      const brandHomeBtn = document.getElementById("brandHomeBtn");
+      const enterBtn = document.getElementById("enterBtn");
+      const continueBtn = document.getElementById("continueBtn");
+      const returnHomeBtn = document.getElementById("returnHomeBtn");
+
+      let currentView = "opening";
+      let selectedAmount = null;
+
+      function showView(name) {
+        Object.keys(views).forEach(function (key) {
+          views[key].classList.remove("is-active");
+        });
+        views[name].classList.add("is-active");
+        currentView = name;
+
+        const showTopBar = name === "interest" || name === "register";
+        topBar.classList.toggle("is-visible", showTopBar);
+        topBar.setAttribute("aria-hidden", String(!showTopBar));
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      enterBtn.addEventListener("click", function () {
+        showView("interest");
+      });
+
+      backBtn.addEventListener("click", function () {
+        if (currentView === "register") {
+          showView("interest");
+        } else {
+          showView("opening");
+        }
+      });
+
+      brandHomeBtn.addEventListener("click", function () {
+        showView("opening");
+      });
+
+      returnHomeBtn.addEventListener("click", function () {
+        resetFlow();
+        showView("opening");
+      });
+
+      /* =====================================================================
+       * 4. INTEREST AMOUNT SELECTION
+       * ===================================================================== */
+      const optionCards = document.querySelectorAll(".amount-option");
+      const continueContainer = document.getElementById("continueContainer");
+      const selectedAmountBadge = document.getElementById("selectedAmountBadge");
+
+      optionCards.forEach(function (card) {
+        card.addEventListener("click", function () {
+          const amount = Number(card.getAttribute("data-amount"));
+          selectedAmount = amount;
+
+          optionCards.forEach(function (c) {
+            const isMatch = Number(c.getAttribute("data-amount")) === amount;
+            c.classList.toggle("is-selected", isMatch);
+            c.querySelector("input").checked = isMatch;
+          });
+
+          continueContainer.classList.add("is-visible");
+        });
+      });
+
+      continueBtn.addEventListener("click", function () {
+        if (!selectedAmount) return;
+        selectedAmountBadge.textContent = "Selected Interest: $" + selectedAmount.toLocaleString("en-US");
+        showView("register");
+      });
+
+      /* =====================================================================
+       * 5. COUNTRY LIST & REGISTRATION SUBMISSION
+       * ===================================================================== */
+      const countries = [
+        "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia",
+        "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados",
+        "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina",
+        "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia",
+        "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China",
+        "Colombia", "Comoros", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic",
+        "Denmark", "Djibouti", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Estonia",
+        "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana",
+        "Greece", "Guatemala", "Guinea", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland",
+        "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan",
+        "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon",
+        "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar",
+        "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico",
+        "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
+        "Namibia", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria",
+        "North Macedonia", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay",
+        "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda",
+        "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia",
+        "Slovenia", "Somalia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan",
+        "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania",
+        "Thailand", "Togo", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Uganda",
+        "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
+        "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+      ];
+
+      const countrySelect = document.getElementById("country");
+      countries.forEach(function (countryName) {
+        const option = document.createElement("option");
+        option.value = countryName;
+        option.textContent = countryName;
+        countrySelect.appendChild(option);
+      });
+
+      const registrationForm = document.getElementById("registrationForm");
+      const fullNameInput = document.getElementById("fullName");
+      const gmailInput = document.getElementById("gmail");
+      const mobileInput = document.getElementById("mobileNumber");
+      const formErrorEl = document.getElementById("formError");
+      const submitBtn = document.getElementById("submitBtn");
+
+      function resetFlow() {
+        selectedAmount = null;
+        optionCards.forEach(function (c) {
+          c.classList.remove("is-selected");
+          c.querySelector("input").checked = false;
+        });
+        continueContainer.classList.remove("is-visible");
+        registrationForm.reset();
+        formErrorEl.textContent = "";
+      }
+
+      registrationForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        formErrorEl.textContent = "";
+
+        const fullName = fullNameInput.value.trim();
+        const gmail = gmailInput.value.trim().toLowerCase();
+        const mobileNumber = mobileInput.value.trim();
+        const country = countrySelect.value;
+
+        if (!selectedAmount || ![1000, 2000, 5000].includes(selectedAmount)) {
+          formErrorEl.textContent = "Please select an interest amount first.";
+          return;
+        }
+
+        if (fullName.length < 2) {
+          formErrorEl.textContent = "Please enter your full name.";
+          fullNameInput.focus();
+          return;
+        }
+
+        if (!/^[a-z0-9._%+-]+@gmail\.com$/i.test(gmail)) {
+          formErrorEl.textContent = "Please enter a valid Gmail address (example@gmail.com).";
+          gmailInput.focus();
+          return;
+        }
+
+        const digitsOnly = mobileNumber.replace(/\D/g, "");
+        if (digitsOnly.length < 7 || digitsOnly.length > 16 || !/^\+?[0-9\s\-()]+$/.test(mobileNumber)) {
+          formErrorEl.textContent = "Please enter a valid mobile number.";
+          mobileInput.focus();
+          return;
+        }
+
+        if (!country) {
+          formErrorEl.textContent = "Please select your country.";
+          countrySelect.focus();
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "SUBMITTING...";
+
+        try {
+          await saveRegistration({
+            full_name: fullName,
+            gmail: gmail,
+            mobile_number: mobileNumber,
+            country: country,
+            interest_amount: selectedAmount
+          });
+          showView("thankyou");
+        } catch (err) {
+          formErrorEl.textContent = "Unable to submit right now. Please try again.";
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "SUBMIT";
+        }
+      });
+
+      /* =====================================================================
+       * 6. INITIALIZE
+       * ===================================================================== */
+      startSimulatedCounter();
+      fetchPublicTierStats();
+
+      if (isDatabaseConfigured) {
+        setInterval(fetchPublicTierStats, 10000);
+      }
+    })();
+  </script>
+</body>
+</html>
